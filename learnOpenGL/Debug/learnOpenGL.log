@@ -1,0 +1,55 @@
+﻿Build started 2016/8/16 22:28:59.
+     1>Project "E:\courses\cg\learnOpengl\learnOpenGL\learnOpenGL.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp model.cpp
+         model.cpp
+     1>e:\courses\cg\learnopengl\glm-0.9.4.0\glm\core\func_common.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>e:\courses\cg\learnopengl\glm-0.9.4.0\glm\core\func_common.inl : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>e:\courses\cg\learnopengl\glm-0.9.4.0\glm\core\func_integer.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>e:\courses\cg\learnopengl\learnopengl\model.cpp(7): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\courses\cg\learnopengl\learnopengl\model.cpp(29): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\courses\cg\learnopengl\learnopengl\model.cpp(42): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\courses\cg\learnopengl\learnopengl\model.cpp(65): warning C4018: '<' : signed/unsigned mismatch
+     1>e:\courses\cg\learnopengl\learnopengl\model.cpp(69): warning C4018: '<' : signed/unsigned mismatch
+         main.cpp
+     1>e:\courses\cg\learnopengl\glm-0.9.4.0\glm\core\func_common.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>e:\courses\cg\learnopengl\glm-0.9.4.0\glm\core\func_common.inl : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>e:\courses\cg\learnopengl\glm-0.9.4.0\glm\core\func_integer.hpp : warning C4819: The file contains a character that cannot be represented in the current code page (936). Save the file in Unicode format to prevent data loss
+     1>e:\courses\cg\learnopengl\learnopengl\main.cpp(272): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>e:\courses\cg\learnopengl\learnopengl\main.cpp(273): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>e:\courses\cg\learnopengl\learnopengl\main.cpp(300): warning C4244: '=' : conversion from 'double' to 'GLfloat', possible loss of data
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\courses\cg\learnOpengl\Debug\learnOpenGL.exe" /INCREMENTAL /NOLOGO SOIL.lib opengl32.lib glew32s.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\courses\cg\learnOpengl\Debug\learnOpenGL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\courses\cg\learnOpengl\Debug\learnOpenGL.lib" /MACHINE:X86 Debug\main.obj
+         Debug\model.obj
+     1>LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>main.obj : error LNK2019: unresolved external symbol _SOIL_load_image referenced in function _main
+     1>model.obj : error LNK2001: unresolved external symbol _SOIL_load_image
+     1>main.obj : error LNK2019: unresolved external symbol _glfwInit referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwTerminate referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwWindowHint referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwCreateWindow referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwWindowShouldClose referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwSetWindowShouldClose referenced in function "void __cdecl key_callback(struct GLFWwindow *,int,int,int,int)" (?key_callback@@YAXPAUGLFWwindow@@HHHH@Z)
+     1>main.obj : error LNK2019: unresolved external symbol _glfwGetFramebufferSize referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwPollEvents referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwSetInputMode referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwSetCursorPos referenced in function "void __cdecl mouse_callback(struct GLFWwindow *,double,double)" (?mouse_callback@@YAXPAUGLFWwindow@@NN@Z)
+     1>main.obj : error LNK2019: unresolved external symbol _glfwSetKeyCallback referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwSetCursorPosCallback referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwGetTime referenced in function "void __cdecl do_movement(void)" (?do_movement@@YAXXZ)
+     1>main.obj : error LNK2019: unresolved external symbol _glfwMakeContextCurrent referenced in function _main
+     1>main.obj : error LNK2019: unresolved external symbol _glfwSwapBuffers referenced in function _main
+     1>model.obj : error LNK2019: unresolved external symbol _SOIL_free_image_data referenced in function "int __cdecl TextureFromFile(char const *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?TextureFromFile@@YAHPBDV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+     1>model.obj : error LNK2019: unresolved external symbol "public: __thiscall Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QAE@XZ) referenced in function "private: void __thiscall Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+     1>model.obj : error LNK2019: unresolved external symbol "public: __thiscall Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QAE@XZ) referenced in function "private: void __thiscall Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+     1>model.obj : error LNK2019: unresolved external symbol "public: struct aiScene const * __thiscall Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QAEPBUaiScene@@PBDI@Z) referenced in function "public: struct aiScene const * __thiscall Assimp::Importer::ReadFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,unsigned int)" (?ReadFile@Importer@Assimp@@QAEPBUaiScene@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z)
+     1>model.obj : error LNK2019: unresolved external symbol "public: char const * __thiscall Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QBEPBDXZ) referenced in function "private: void __thiscall Model::loadModel(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?loadModel@Model@@AAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z)
+     1>model.obj : error LNK2019: unresolved external symbol _aiGetMaterialTextureCount referenced in function "public: unsigned int __thiscall aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QBEIW4aiTextureType@@@Z)
+     1>model.obj : error LNK2019: unresolved external symbol _aiGetMaterialTexture referenced in function "public: enum aiReturn __thiscall aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QBE?AW4aiReturn@@W4aiTextureType@@IPAUaiString@@PAW4aiTextureMapping@@PAIPAMPAW4aiTextureOp@@PAW4aiTextureMapMode@@@Z)
+     1>E:\courses\cg\learnOpengl\Debug\learnOpenGL.exe : fatal error LNK1120: 23 unresolved externals
+     1>Done Building Project "E:\courses\cg\learnOpengl\learnOpenGL\learnOpenGL.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.44
