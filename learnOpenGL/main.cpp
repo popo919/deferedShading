@@ -60,19 +60,54 @@ int main()
 	//shader
 	/********************************************************************/
 	Shader shader("shader\\vs.vs", "shader\\fs.fs");
-
+	Shader lightShader("shader\\lightVs.vs", "shader\\lightFs.fs");
 	Shader lightingShader("shader\\lighting.vs", "shader\\lighting.fs");
-	lightingShader.Use();
-	//light uniform
-	GLint lightDirectionLocation = glGetUniformLocation(lightingShader.Program, "light.direction"); 
-	glUniform3f(lightDirectionLocation, -1.0f, -1.0f, 1.0f);
-	GLint lightAmbientLocation = glGetUniformLocation(lightingShader.Program, "light.ambient");
-	glUniform3f(lightAmbientLocation, 0.2f, 0.2f, 0.2f);
-	GLint lightColorLocation = glGetUniformLocation(lightingShader.Program, "light.color");
-	glUniform3f(lightColorLocation, 1.0f, 1.0f, 1.0f);
-	GLint lightPositionLocation = glGetUniformLocation(lightingShader.Program, "light.position");
-	glUniform3f(lightPositionLocation, 1.0f, 1.0f, 1.0f);
+	Shader triangleShader("shader\\triangleVs.vs", "shader\\triangleFs.fs");
 
+	lightingShader.Use();
+
+	//light uniform
+	// - Colors
+	const GLuint NR_LIGHTS = 32;
+	std::vector<glm::vec3> lightOffset;
+	std::vector<glm::mat4> lightModels;
+	std::vector<glm::vec3> lightColors;
+	srand(13);
+	for (GLuint i = 0; i < NR_LIGHTS; i++)
+	{
+		// Calculate slightly random offsets
+		GLfloat xPos = ((rand() % 100) / 100.0) * 6.0 - 3.0;
+		GLfloat yPos = ((rand() % 100) / 100.0) * 6.0 - 4.0;
+		GLfloat zPos = ((rand() % 100) / 100.0) * 6.0 - 3.0;
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(xPos, yPos, zPos));
+		model = glm::scale(model, glm::vec3(0.125, 0.125, 0.125));
+		lightModels.push_back(model);
+		lightOffset.push_back(glm::vec3(xPos, yPos, zPos));
+		// Also calculate random color
+		GLfloat rColor = ((rand() % 100) / 200.0f) + 0.5; // Between 0.5 and 1.0
+		GLfloat gColor = ((rand() % 100) / 200.0f) + 0.5; // Between 0.5 and 1.0
+		GLfloat bColor = ((rand() % 100) / 200.0f) + 0.5; // Between 0.5 and 1.0
+		lightColors.push_back(glm::vec3(rColor, gColor, bColor));
+	}
+
+	for (int i = 0; i < 32; ++i)
+	{
+		GLint lightDirectionLocation = glGetUniformLocation(lightingShader.Program, ("light["+to_string(i)+"].direction").c_str());
+		glUniform3f(lightDirectionLocation, -1.0f, -1.0f, 1.0f);
+		GLint lightAmbientLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].ambient").c_str());
+		glUniform3f(lightAmbientLocation, 0.2f, 0.2f, 0.2f);
+		GLint lightColorLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].color").c_str());
+		glUniform3f(lightColorLocation, lightColors[i][0], lightColors[i][1], lightColors[i][2]);
+		GLint lightPositionLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].position").c_str());
+		glUniform4f(lightPositionLocation, lightOffset[i][0], lightOffset[i][1], lightOffset[i][2], 1.0f);
+		GLint lightConstantLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].constant").c_str());
+		glUniform1f(lightConstantLocation, 1.0f);
+		GLint lightLinearLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].linear").c_str());
+		glUniform1f(lightLinearLocation, 0.07f);
+		GLint lightQuadraticLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].quadratic").c_str());
+		glUniform1f(lightQuadraticLocation, 0.017f);
+	}
 	/********************************************************************/
 	//gBuffer
 	/********************************************************************/
@@ -130,6 +165,13 @@ int main()
 	glfwGetFramebufferSize(window, &width, &height);
 	glViewport(0, 0, width, height);
 
+	//triengle
+	GLfloat triangleVert[] = {
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f
+	};
+
 	//lights
 	GLfloat vertices[] = {
 	// Back face
@@ -175,27 +217,18 @@ int main()
 	-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,// top-left
 	-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f // bottom-left        
 	};
-
-	// - Colors
-	const GLuint NR_LIGHTS = 32;
-	std::vector<glm::mat4> lightModels;
-	std::vector<glm::vec3> lightColors;
-	srand(13);
-	for (GLuint i = 0; i < NR_LIGHTS; i++)
-	{
-		// Calculate slightly random offsets
-		GLfloat xPos = ((rand() % 100) / 100.0) * 6.0 - 3.0;
-		GLfloat yPos = ((rand() % 100) / 100.0) * 6.0 - 4.0;
-		GLfloat zPos = ((rand() % 100) / 100.0) * 6.0 - 3.0;
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(xPos, yPos, zPos));
-		lightModels.push_back(model);
-		// Also calculate random color
-		GLfloat rColor = ((rand() % 100) / 200.0f) + 0.5; // Between 0.5 and 1.0
-		GLfloat gColor = ((rand() % 100) / 200.0f) + 0.5; // Between 0.5 and 1.0
-		GLfloat bColor = ((rand() % 100) / 200.0f) + 0.5; // Between 0.5 and 1.0
-		lightColors.push_back(glm::vec3(rColor, gColor, bColor));
-	}
+	
+	std::vector<glm::vec3> objectPositions;
+	objectPositions.push_back(glm::vec3(-3.0, -3.0, -3.0));
+	objectPositions.push_back(glm::vec3(0.0, -3.0, -3.0));
+	objectPositions.push_back(glm::vec3(3.0, -3.0, -3.0));
+	objectPositions.push_back(glm::vec3(-3.0, -3.0, 0.0));
+	objectPositions.push_back(glm::vec3(0.0, -3.0, 0.0));
+	objectPositions.push_back(glm::vec3(3.0, -3.0, 0.0));
+	objectPositions.push_back(glm::vec3(-3.0, -3.0, 3.0));
+	objectPositions.push_back(glm::vec3(0.0, -3.0, 3.0));
+	objectPositions.push_back(glm::vec3(3.0, -3.0, 3.0));
+	
 
 	//quad
 	glm::vec3 quadVert[] =
@@ -206,7 +239,7 @@ int main()
 		glm::vec3(-1, -1, 0),
 		glm::vec3(1, 1, 0),
 		glm::vec3(1, -1, 0)
-	};
+	}; 
 
 	glm::vec2 quadUVs[] =
 	{
@@ -235,7 +268,7 @@ int main()
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
-
+	
 	//light
 	GLuint lightVertBuffer, lightColorBuffer, lightModelBuffer, lightVBA;
 	glGenVertexArrays(1, &lightVBA);
@@ -243,7 +276,7 @@ int main()
 
 	glGenBuffers(1, &lightVertBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, lightVertBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 36 * 8 * sizeof(GL_FLOAT), &vertices[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)0);
 	glEnableVertexAttribArray(0);
 
@@ -255,14 +288,14 @@ int main()
 
 	glGenBuffers(1, &lightModelBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, lightModelBuffer);
-	glBufferData(GL_ARRAY_BUFFER, lightModels.size() * sizeof(glm::mat4), &lightModels[0], GL_STATIC_DRAW);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 16, (void*)0);
+	glBufferData(GL_ARRAY_BUFFER, lightModels.size() * sizeof(glm::mat4), &lightModels[0][0], GL_STATIC_DRAW);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(glm::vec4), (void*)0);
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 16, (void*)4);
+	glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(glm::vec4), (void*)(1 * sizeof(glm::vec4)));
 	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 16, (void*)8);
+	glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(glm::vec4), (void*)(2 * sizeof(glm::vec4)));
 	glEnableVertexAttribArray(4);
-	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 16, (void*)12);
+	glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(glm::vec4), (void*)(3 * sizeof(glm::vec4)));
 	glEnableVertexAttribArray(5);
 
 	glVertexAttribDivisor(1, 1);
@@ -273,12 +306,23 @@ int main()
 
 	glBindVertexArray(0);
 
+	//triangle
+	GLuint triVertBuffer, triVBA;
+	glGenVertexArrays(1, &triVBA);
+	glBindVertexArray(triVBA);
+
+	glGenBuffers(1, &triVertBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, triVertBuffer);
+	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), &triangleVert[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+
 	/********************************************************************/
 	//camera
 	/********************************************************************/
 
-	glm::mat4 baseModel = glm::mat4(1.0f);
-	baseModel = glm::scale(baseModel, glm::vec3(0.25, 0.25, 0.25));
 	glm::mat4 proj = glm::perspective(45.0f, 1.0f, 0.1f, 100.0f);
 
 	glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
@@ -288,11 +332,10 @@ int main()
 	/********************************************************************/
 	while (!glfwWindowShouldClose(window))
 	{
-		
+		printError();
 		// Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
 		glfwPollEvents();
 		do_movement();
-		printError();
 
 		//geometry pass
 		glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
@@ -306,26 +349,24 @@ int main()
 		glm::vec3 center = eye + front;
 		glm::mat4 view = glm::lookAt(eye, center, up);
 
-		glm::mat4 modelMatrix;
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < 9; ++i)
 		{
-			for (int j = 0; j < 3; ++j)
-			{
-				modelMatrix = glm::translate(baseModel, glm::vec3(16 * i - 16, 0, -8 * j + 16));
-				glm::mat4 MVP = proj * view * modelMatrix;
-				glUniformMatrix4fv(glGetUniformLocation(shader.Program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
-				glUniformMatrix4fv(glGetUniformLocation(shader.Program, "Model"), 1, GL_FALSE, &modelMatrix[0][0]);
+			glm::mat4 modelMat = glm::mat4(1.0f);
+			modelMat = glm::translate(modelMat, objectPositions[i]);
+			modelMat = glm::scale(modelMat, glm::vec3(0.25f));
+			glm::mat4 MVP = proj * view * modelMat;
+			glUniformMatrix4fv(glGetUniformLocation(shader.Program, "MVP"), 1, GL_FALSE, &MVP[0][0]);
+			glUniformMatrix4fv(glGetUniformLocation(shader.Program, "Model"), 1, GL_FALSE, &modelMat[0][0]);
 
-				model.Draw(shader);
-			}
-		} 
-		
+			model.Draw(shader);
+		}
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
+		
 		//lighting pass
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		lightingShader.Use();
-		
+
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "eye"), eye[0], eye[1], eye[2]);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, gPosition);
@@ -337,12 +378,29 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "gAlbedoSpec"), 2);
 
+		glClear(GL_DEPTH_BUFFER_BIT);
 		glBindVertexArray(quadVertexBufferArray);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
 
+		//copy depth buffer
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+		
 		//draw lights
+		glBindVertexArray(lightVBA);
+		lightShader.Use();
+		glm::mat4 VP = proj * view;
+		glUniformMatrix4fv(glGetUniformLocation(lightShader.Program, "VP"), 1, GL_FALSE, &VP[0][0]);
+		glDrawArraysInstanced(GL_TRIANGLES, 0, 36, NR_LIGHTS);
+		glBindVertexArray(0);
 
+		//draw triangle
+		/*triangleShader.Use();
+		glBindVertexArray(triVBA);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(0);*/
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);

@@ -161,6 +161,8 @@
     <None Include="shader\lighting.fs" />
     <None Include="shader\lighting.vs" />
     <None Include="shader\lightVs.vs" />
+    <None Include="shader\triangleFs.fs" />
+    <None Include="shader\triangleVs.vs" />
     <None Include="shader\vs.vs" />
   </ItemGroup>
   <ItemGroup>

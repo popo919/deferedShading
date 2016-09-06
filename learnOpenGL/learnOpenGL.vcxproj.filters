@@ -44,6 +44,12 @@
     <None Include="shader\lighting.vs">
       <Filter>shader</Filter>
     </None>
+    <None Include="shader\triangleVs.vs">
+      <Filter>shader</Filter>
+    </None>
+    <None Include="shader\triangleFs.fs">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="shader.h">

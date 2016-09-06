@@ -21,7 +21,7 @@ struct Light
 uniform sampler2D gPosition;
 uniform sampler2D gNormal;
 uniform sampler2D gAlbedoSpec;
-uniform Light light;
+uniform Light light[32];
 uniform vec3 eye;
 
 vec3 pointLightShading(Light light, vec3 fragPos, vec3 fragNormal, vec3 spec, vec3 diff);
@@ -30,12 +30,17 @@ vec3 directionalLightShading(Light light, vec3 fragPos, vec3 fragNormal, vec3 sp
 void main()
 {
 	vec3 fragPos = texture(gPosition, quadUV).xyz;
-	vec3 fragNormal = texture(gNormal, quadUV).xyz;
+	vec3 fragNormal = normalize(texture(gNormal, quadUV).xyz);
 	vec3 diffuse = texture(gAlbedoSpec, quadUV).rgb;
 	float spec = 1 - texture(gAlbedoSpec, quadUV).a;
 	vec3 specular = vec3(spec, spec, spec);
 
-	vec3 res = directionalLightShading(light, fragPos, fragNormal, specular, diffuse);
+	vec3 res = vec3(0, 0, 0);
+
+	for(int i = 0; i < 32; ++i)
+	{
+		res = pointLightShading(light[i], fragPos, fragNormal, specular, diffuse);
+	}
 	//ouputColor = vec4(res, 1.0f);
 	ouputColor = vec4(res, 1);
 }
