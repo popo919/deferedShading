@@ -152,10 +152,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="model.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="shader\fs.fs" />
     <None Include="shader\lightFs.fs" />
     <None Include="shader\lighting.fs" />
@@ -166,11 +162,8 @@
     <None Include="shader\vs.vs" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mesh.h" />
-    <ClInclude Include="model.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="stdfx.h" />
-    <ClInclude Include="util.h" />
+    <ClCompile Include="deferredShading\main.cpp" />
+    <ClCompile Include="deferredShading\model.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

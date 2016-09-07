@@ -21,6 +21,7 @@ struct Light
 uniform sampler2D gPosition;
 uniform sampler2D gNormal;
 uniform sampler2D gAlbedoSpec;
+int lightNum = 32;
 uniform Light light[32];
 uniform vec3 eye;
 
@@ -32,15 +33,17 @@ void main()
 	vec3 fragPos = texture(gPosition, quadUV).xyz;
 	vec3 fragNormal = normalize(texture(gNormal, quadUV).xyz);
 	vec3 diffuse = texture(gAlbedoSpec, quadUV).rgb;
-	float spec = 1 - texture(gAlbedoSpec, quadUV).a;
+	float spec = texture(gAlbedoSpec, quadUV).a;
 	vec3 specular = vec3(spec, spec, spec);
 
 	vec3 res = vec3(0, 0, 0);
+	res += diffuse * 0.1f;
 
-	for(int i = 0; i < 32; ++i)
+	for(int i = 0; i < lightNum; ++i)
 	{
-		res = pointLightShading(light[i], fragPos, fragNormal, specular, diffuse);
+		res += pointLightShading(light[i], fragPos, fragNormal, specular, diffuse);
 	}
+	//res = pointLightShading(light[31], fragPos, fragNormal, specular, diffuse);
 	//ouputColor = vec4(res, 1.0f);
 	ouputColor = vec4(res, 1);
 }
@@ -53,12 +56,11 @@ vec3 pointLightShading(Light light, vec3 fragPos, vec3 fragNormal, vec3 spec, ve
 	vec3 reflection = normalize(reflect(-lightDir, fragNormal));
 	float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * distance * distance);
 
-	vec3 ambient = light.ambient * diff;
 	vec3 diffuse = light.color * max(dot(lightDir, fragNormal), 0.0) * diff;
 	vec3 specular = light.color * 
 		pow(max(dot(eyeDir, reflection), 0.0), 32) * spec;
 	
-	vec3 color = ambient + diffuse * attenuation + specular * attenuation;
+	vec3 color = diffuse * attenuation + specular * attenuation;
 	return color;
 }
 

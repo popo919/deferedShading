@@ -24,6 +24,6 @@ void main()
 	gPosition = fragPos;
 	gNormal = fragNormal;
 	gAldobeSpec.rgb = texture(material.texture_diffuse1, fragUV).rgb;
-	gAldobeSpec.a = 1 - texture(material.texture_specular1, fragUV).r;
+	gAldobeSpec.a = texture(material.texture_specular1, fragUV).r;
 }
 

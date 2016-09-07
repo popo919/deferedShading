@@ -91,7 +91,7 @@ int main()
 		lightColors.push_back(glm::vec3(rColor, gColor, bColor));
 	}
 
-	for (int i = 0; i < 32; ++i)
+	for (int i = 0; i < NR_LIGHTS; ++i)
 	{
 		GLint lightDirectionLocation = glGetUniformLocation(lightingShader.Program, ("light["+to_string(i)+"].direction").c_str());
 		glUniform3f(lightDirectionLocation, -1.0f, -1.0f, 1.0f);
@@ -104,9 +104,9 @@ int main()
 		GLint lightConstantLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].constant").c_str());
 		glUniform1f(lightConstantLocation, 1.0f);
 		GLint lightLinearLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].linear").c_str());
-		glUniform1f(lightLinearLocation, 0.07f);
+		glUniform1f(lightLinearLocation, 0.7f);
 		GLint lightQuadraticLocation = glGetUniformLocation(lightingShader.Program, ("light[" + to_string(i) + "].quadratic").c_str());
-		glUniform1f(lightQuadraticLocation, 0.017f);
+		glUniform1f(lightQuadraticLocation, 1.8f);
 	}
 	/********************************************************************/
 	//gBuffer
@@ -343,7 +343,7 @@ int main()
 		shader.Use();
 		// Render
 		// Clear the color buffer
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::vec3 center = eye + front;
