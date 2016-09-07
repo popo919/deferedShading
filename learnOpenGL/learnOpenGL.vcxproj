@@ -81,7 +81,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>../glew-2.0.0/include;../glfw-3.0.3/src;../glfw-3.0.3/include;../soil/src;../glm-0.9.4.0/glm;../assimp;$(IncludePath)</IncludePath>
+    <IncludePath>../glew-2.0.0/include;../glfw-3.0.3/src;../glfw-3.0.3/include;../soil/src;../glm-0.9.4.0/glm;../assimp;util;$(IncludePath)</IncludePath>
     <LibraryPath>../glew-2.0.0\lib\Release\x64;../glfw-3.0.3;../soil/lib;../assimp/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -163,7 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="deferredShading\main.cpp" />
-    <ClCompile Include="deferredShading\model.cpp" />
+    <ClCompile Include="util\model.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -59,10 +59,12 @@ int main()
 	/********************************************************************/
 	//shader
 	/********************************************************************/
-	Shader shader("shader\\vs.vs", "shader\\fs.fs");
-	Shader lightShader("shader\\lightVs.vs", "shader\\lightFs.fs");
-	Shader lightingShader("shader\\lighting.vs", "shader\\lighting.fs");
-	Shader triangleShader("shader\\triangleVs.vs", "shader\\triangleFs.fs");
+	string currentProject = "deferredShading";
+
+	Shader shader((currentProject + "\\shader\\vs.vs").c_str(), (currentProject + "\\shader\\fs.fs").c_str());
+	Shader lightShader((currentProject + "\\shader\\lightVs.vs").c_str(), (currentProject + "\\shader\\lightFs.fs").c_str());
+	Shader lightingShader((currentProject + "\\shader\\lighting.vs").c_str(), (currentProject + "\\shader\\lighting.fs").c_str());
+	Shader triangleShader((currentProject + "\\shader\\triangleVs.vs").c_str(), (currentProject + "\\shader\\triangleFs.fs").c_str());
 
 	lightingShader.Use();
 

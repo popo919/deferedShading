@@ -44,10 +44,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="deferredShading\main.cpp">
+    <ClCompile Include="util\model.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="deferredShading\model.cpp">
+    <ClCompile Include="deferredShading\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
