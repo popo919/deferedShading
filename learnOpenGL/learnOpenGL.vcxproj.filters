@@ -18,36 +18,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader\fs.fs">
+    <None Include="ssao\shader\fs.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\vs.vs">
+    <None Include="ssao\shader\lightFs.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\lightFs.fs">
+    <None Include="ssao\shader\lighting.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\lightVs.vs">
+    <None Include="ssao\shader\lighting.vs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\lighting.fs">
+    <None Include="ssao\shader\lightVs.vs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\lighting.vs">
+    <None Include="ssao\shader\triangleFs.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\triangleVs.vs">
+    <None Include="ssao\shader\triangleVs.vs">
       <Filter>shader</Filter>
     </None>
-    <None Include="shader\triangleFs.fs">
+    <None Include="ssao\shader\vs.vs">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="util\model.cpp">
+    <ClCompile Include="ssao\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="deferredShading\main.cpp">
+    <ClCompile Include="util\model.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
