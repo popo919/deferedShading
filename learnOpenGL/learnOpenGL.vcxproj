@@ -19,17 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ssao\shader\fs.fs" />
-    <None Include="ssao\shader\lightFs.fs" />
-    <None Include="ssao\shader\lighting.fs" />
-    <None Include="ssao\shader\lighting.vs" />
-    <None Include="ssao\shader\lightVs.vs" />
-    <None Include="ssao\shader\triangleFs.fs" />
-    <None Include="ssao\shader\triangleVs.vs" />
-    <None Include="ssao\shader\vs.vs" />
+    <None Include="gs\shader\triangleFs.fs" />
+    <None Include="gs\shader\triangleVs.vs" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ssao\main.cpp" />
+    <ClCompile Include="gs\main.cpp" />
     <ClCompile Include="util\model.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

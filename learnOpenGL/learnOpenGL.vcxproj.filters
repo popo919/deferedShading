@@ -18,33 +18,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ssao\shader\fs.fs">
+    <None Include="gs\shader\triangleFs.fs">
       <Filter>shader</Filter>
     </None>
-    <None Include="ssao\shader\lightFs.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="ssao\shader\lighting.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="ssao\shader\lighting.vs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="ssao\shader\lightVs.vs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="ssao\shader\triangleFs.fs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="ssao\shader\triangleVs.vs">
-      <Filter>shader</Filter>
-    </None>
-    <None Include="ssao\shader\vs.vs">
+    <None Include="gs\shader\triangleVs.vs">
       <Filter>shader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ssao\main.cpp">
+    <ClCompile Include="gs\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="util\model.cpp">
