@@ -61,6 +61,7 @@ int main()
 	/********************************************************************/
 	string currentProject = "gsDemo";
 
+
 	Shader shader((currentProject + "\\shader\\vs.vs").c_str(), (currentProject + "\\shader\\fs.fs").c_str());
 	Shader lightShader((currentProject + "\\shader\\lightVs.vs").c_str(), (currentProject + "\\shader\\lightFs.fs").c_str());
 	Shader lightingShader((currentProject + "\\shader\\lighting.vs").c_str(), (currentProject + "\\shader\\lighting.fs").c_str());
